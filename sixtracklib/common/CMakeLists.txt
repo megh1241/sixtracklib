@@ -23,6 +23,7 @@ set( SIXTRACKLIB_COMMON_HEADERS
      compute_arch.h
      mem_pool.h
      particles.h
+     pyheadtail_particles.h
      track.h
 )
 
@@ -66,5 +67,5 @@ install( FILES ${SIXTRACKLIB_COMMON_HEADERS}
 
 install( FILES ${SIXTRACKLIB_COMMON_IMPL_HEADERS}
          DESTINATION "${SIXTRACKLIB_COMMON_INSTALL_PATH}/impl" )
-
+set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-dynamic")
 #end sixtracklib/common/CMakeLists.txt

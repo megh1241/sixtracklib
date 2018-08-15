@@ -14,7 +14,7 @@ option( SIXTRACKL_ENABLE_AUTOVECTORIZATION "Enable Autovectorization"       OFF 
 option( SIXTRACKL_ENABLE_MANUAL_SIMD       "Enable manual SIMD backend"     OFF )
 option( SIXTRACKL_ENABLE_OPENMP            "Enable OpenMP backend"          OFF )
 option( SIXTRACKL_ENABLE_OPENCL            "Enable OpenCL backend"          OFF )
-option( SIXTRACKL_ENABLE_CUDA              "Enable CUDA backend"            OFF )
+option( SIXTRACKL_ENABLE_CUDA              "Enable CUDA backend"            ON )
 option( SIXTRACKL_ENABLE_MPFR4             "Enable GMP/MPFR4 backend"       OFF )
 
 # ------------------------------------------------------------------------------
@@ -77,10 +77,10 @@ endif()
 # ------------------------------------------------------------------------------
 # CUDA related settings:
 
-set(  SIXTRACKL_CUDA_COMPUTE_ARCH_LIST )
+#set(  SIXTRACKL_CUDA_COMPUTE_ARCH_LIST )
 
-if( SIXTRACKL_ENABLE_CUDA )
-    list( APPEND SIXTRACKL_CUDA_COMPUTE_ARCH_LIST "30" )
-endif()
+#if( SIXTRACKL_ENABLE_CUDA )
+#    list( APPEND SIXTRACKL_CUDA_COMPUTE_ARCH_LIST "55" )
+#endif()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

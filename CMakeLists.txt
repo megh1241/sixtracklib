@@ -148,6 +148,7 @@ if( SIXTRACKL_BUILD_EXAMPLES )
     add_subdirectory( examples )
 endif()
 
+set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-dynamic")
 # ------------------------------------------------------------------------------
 #
 # end: sixtracklib/CMakeLists.txt

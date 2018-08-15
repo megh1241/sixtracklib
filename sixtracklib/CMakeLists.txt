@@ -90,7 +90,7 @@ target_compile_definitions( sixtrack PUBLIC ${SIXTRACKLIB_NAMESPACE_FLAGS} )
 target_compile_options( sixtrack
                         PRIVATE -Wall -Werror -pedantic -ansi
                         ${SIXTRACKLIB_CPU_FLAGS} )
-
+set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-dynamic")
 # ------------------------------------------------------------------------------
 # install :
 

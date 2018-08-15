@@ -4,17 +4,144 @@
 
 #if !defined( SIXTRL_NO_SYSTEM_INCLUDES )
     #include <stdio.h>
+    #include <cuda.h>
 #endif /* !defined( SIXTRL_NO_SYSTEM_INCLUDES ) */
 
 #if !defined( SIXTRL_NO_INCLUDES )
     #include "sixtracklib/_impl/definitions.h"
     #include "sixtracklib/common/blocks.h"
     #include "sixtracklib/common/particles.h"
+    #include "sixtracklib/common/pyheadtail_particles.h"
     #include "sixtracklib/common/beam_elements.h"
     #include "sixtracklib/common/impl/faddeeva.h"
     #include "sixtracklib/common/impl/beam_beam_element_6d.h"
     #include "sixtracklib/common/track.h"
 #endif /* !defined( SIXTRL_NO_INCLUDES ) */
+
+__global__ void Copy_buffer_pyheadtail_sixtracklib(
+    unsigned char* __restrict__ particles_data_buffer,
+    double*  __restrict__ x,
+    double*  __restrict__ xp,
+    double*  __restrict__ y,
+    double*  __restrict__ yp,
+    double*  __restrict__ q0,
+    double*  __restrict__ mass0,
+    double*  __restrict__ beta0,
+    double*  __restrict__ gamma0,
+    double*  __restrict__ z,
+    double*  __restrict__ dp,
+    double*  __restrict__ p0c,
+    int64_t*       __restrict__ ptr_success_flag
+){
+	
+	NS(Blocks) particles_buffer;
+	NS(Blocks_preset)( &particles_buffer );
+	NS(Blocks_unserialize_without_remapping)( &particles_buffer, particles_data_buffer );
+
+	NS(BlockInfo)* ptr_info  = NS(Blocks_get_block_infos_begin)( &particles_buffer );
+	NS(Particles)* particles = NS(Blocks_get_particles)( ptr_info );
+	size_t num_of_particles  = NS(Particles_get_num_particles)( particles );
+
+	memcpy( NS(Particles_get_x)( particles ),
+             x,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_px)( particles ),
+             xp,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_y)( particles ),
+             y,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_py)( particles ),
+             yp,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_q0)( particles ),
+             q0,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_mass0)( particles ),
+             mass0,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_beta0)( particles ),
+             beta0,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_gamma0)( particles ),
+             gamma0,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_sigma)( particles ),
+             z,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_delta)( particles ),
+             dp,
+             num_of_particles * sizeof( double )
+             );
+	memcpy( NS(Particles_get_p0c)( particles ),
+             p0c,
+             num_of_particles * sizeof( double )
+             );
+}
+
+
+__global__ void Copy_buffer_sixtracklib_pyheadtail(
+    unsigned char* __restrict__ particles_data_buffer,
+    double*  __restrict__ x,
+    double*  __restrict__ xp,
+    double*  __restrict__ y,
+    double*  __restrict__ yp,
+    double*  __restrict__ q0,
+    double*  __restrict__ mass0,
+    double*  __restrict__ beta0,
+    double*  __restrict__ gamma0,
+    double*  __restrict__ z,
+    double*  __restrict__ dp,
+    double*  __restrict__ p0c,
+    int64_t*       __restrict__ ptr_success_flag
+){
+	NS(Blocks) particles_buffer;
+	NS(Blocks_preset)( &particles_buffer );
+	NS(Blocks_unserialize_without_remapping)( &particles_buffer, particles_data_buffer );
+
+	NS(BlockInfo)* ptr_info  = NS(Blocks_get_block_infos_begin)( &particles_buffer );
+	NS(Particles)* particles = NS(Blocks_get_particles)( ptr_info );
+	size_t num_of_particles  = NS(Particles_get_num_particles)( particles );
+
+	memcpy(x, NS(Particles_get_const_x)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(xp, NS(Particles_get_const_px)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(y, NS(Particles_get_const_y)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(yp, NS(Particles_get_const_py)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(q0, NS(Particles_get_const_q0)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(mass0, NS(Particles_get_const_mass0)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(beta0, NS(Particles_get_const_beta0)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(gamma0, NS(Particles_get_const_gamma0)( particles ),
+             num_of_particles * sizeof( double )
+             );
+	memcpy(z, NS(Particles_get_const_sigma)( particles ),
+             num_of_particles * sizeof( double )
+             );
+}
+
+
 
 __global__ void Track_remap_serialized_blocks_buffer(
     unsigned char* __restrict__ particles_data_buffer,

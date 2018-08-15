@@ -23,6 +23,7 @@
 
 #include "sixtracklib/common/impl/particles_type.h"
 #include "sixtracklib/common/particles.h"
+#include "sixtracklib/common/pyheadtail_particles.h"
 #include "sixtracklib/common/impl/particles_api.h"
 
 #include "sixtracklib/common/track.h"

@@ -36,6 +36,8 @@ target_compile_options( sixtrack_opencl BEFORE PUBLIC
 
 set( SIXTRACKLIB_OPENCL_INSTALL_PATH include/sixtracklib/opencl )
 
+set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-dynamic")
+
 install( FILES ${SIXTRACKLIB_OPENCL_HEADERS}
          DESTINATION ${SIXTRACKLIB_OPENCL_INSTALL_PATH} )
 

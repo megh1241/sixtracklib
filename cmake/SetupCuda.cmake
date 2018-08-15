@@ -11,9 +11,9 @@ if( NOT  SIXTRACKL_CMAKE_SETUP_CUDA_FINISHED   )
         set( SIXTRACKL_CUDA_LIBRARIES )
     endif()
 
-    if( NOT  SIXTRACKL_CUDA_VERSION_STR )
-        set( SIXTRACKL_CUDA_VERSION_STR "" )
-    endif()
+    #if( NOT  SIXTRACKL_CUDA_VERSION_STR )
+    #    set( SIXTRACKL_CUDA_VERSION_STR "" )
+    #endif()
 
     if( NOT CUDA_FOUND )
         find_package( CUDA REQUIRED )
@@ -29,10 +29,13 @@ if( NOT  SIXTRACKL_CMAKE_SETUP_CUDA_FINISHED   )
             set( SIXTRACKL_CUDA_VERSION_STR ${SIXTRACKL_CUDA_VERSION_STR}
                  ${CUDA_VERSION_STRING} )
 
+	    set( SIXTRACKL_CUDA_VERSION_STR "9.1" )
+
         endif()
 
     endif()
 
 endif()
+set( SIXTRACKL_CUDA_VERSION_STR "9.1" )
 
 #end: sixtracklib/cmake/SetupOpenCL.cmake

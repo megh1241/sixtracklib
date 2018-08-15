@@ -59,7 +59,7 @@ install( CODE "
     configure_file( \"${MODULES_H_IN_PATH}\" \"${MODULES_H_INSTALL_PATH}\"
         @ONLY ) " )
 
-
+set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-dynamic")
 
 # ------------------------------------------------------------------------------
 # create a header file _impl/path.h with the current, local absolute path to
